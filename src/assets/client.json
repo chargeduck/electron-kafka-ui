@@ -1,0 +1,456 @@
+{
+  "brokerMetadata": "{\"1\":{\"nodeId\":1,\"host\":\"localhost\",\"port\":9092}}",
+  "brokerMetadataLastUpdate": "2024-07-04 16:04:12",
+  "brokers": {
+    "localhost:9092": {
+      "_events": {},
+      "_eventsCount": 0,
+      "socket": {
+        "connecting": false,
+        "_hadError": false,
+        "_parent": null,
+        "_host": "localhost",
+        "_closeAfterHandlingError": false,
+        "_events": {
+          "error": [
+            null,
+            null
+          ],
+          "end": [
+            null,
+            null
+          ]
+        },
+        "_readableState": {
+          "highWaterMark": 16384,
+          "buffer": [],
+          "bufferIndex": 0,
+          "length": 0,
+          "pipes": [],
+          "awaitDrainWriters": null
+        },
+        "_writableState": {
+          "highWaterMark": 16384,
+          "length": 0,
+          "corked": 0,
+          "writelen": 0,
+          "bufferedIndex": 0,
+          "pendingcb": 0
+        },
+        "allowHalfOpen": false,
+        "_eventsCount": 5,
+        "_sockname": null,
+        "_pendingData": null,
+        "_pendingEncoding": "",
+        "server": null,
+        "_server": null,
+        "addr": "localhost:9092",
+        "host": "localhost",
+        "port": 9092,
+        "socketId": 0,
+        "buffer": {
+          "_bufs": [],
+          "length": 0,
+          "_readableState": {
+            "objectMode": false,
+            "highWaterMark": 16384,
+            "buffer": {
+              "head": null,
+              "tail": null,
+              "length": 0
+            },
+            "length": 0,
+            "pipes": null,
+            "pipesCount": 0,
+            "flowing": null,
+            "ended": false,
+            "endEmitted": false,
+            "reading": false,
+            "sync": true,
+            "needReadable": false,
+            "emittedReadable": false,
+            "readableListening": false,
+            "resumeScheduled": false,
+            "destroyed": false,
+            "defaultEncoding": "utf8",
+            "awaitDrain": 0,
+            "readingMore": false,
+            "decoder": null,
+            "encoding": null
+          },
+          "readable": true,
+          "_events": {},
+          "_eventsCount": 1,
+          "_writableState": {
+            "objectMode": false,
+            "highWaterMark": 16384,
+            "finalCalled": false,
+            "needDrain": false,
+            "ending": false,
+            "ended": false,
+            "finished": false,
+            "destroyed": false,
+            "decodeStrings": true,
+            "defaultEncoding": "utf8",
+            "length": 0,
+            "writing": false,
+            "corked": 0,
+            "sync": true,
+            "bufferProcessing": false,
+            "writecb": null,
+            "writelen": 0,
+            "bufferedRequest": null,
+            "lastBufferedRequest": null,
+            "pendingcb": 0,
+            "prefinished": false,
+            "errorEmitted": false,
+            "bufferedRequestCount": 0,
+            "corkedRequestsFree": {
+              "next": null,
+              "entry": null
+            }
+          },
+          "writable": true,
+          "allowHalfOpen": true
+        },
+        "autoSelectFamilyAttemptedAddresses": [
+          "::1:9092"
+        ],
+        "error": null
+      },
+      "idleConnectionMs": 300000,
+      "needAuthentication": false,
+      "authenticated": false,
+      "readableSocket": {
+        "_events": {},
+        "_readableState": {
+          "highWaterMark": 16384,
+          "buffer": [],
+          "bufferIndex": 0,
+          "length": 0,
+          "pipes": [
+            {
+              "_events": {},
+              "_readableState": {
+                "highWaterMark": 16384,
+                "buffer": [],
+                "bufferIndex": 0,
+                "length": 0,
+                "pipes": [],
+                "awaitDrainWriters": null
+              },
+              "_writableState": {
+                "highWaterMark": 16384,
+                "length": 0,
+                "corked": 0,
+                "writelen": 0,
+                "bufferedIndex": 0,
+                "pendingcb": 0
+              },
+              "allowHalfOpen": true,
+              "_eventsCount": 6,
+              "noAckBatchSize": null,
+              "noAckBatchAge": null,
+              "_KafkaBuffer": {
+                "_batch_size": null,
+                "_batch_age": null,
+                "_batch_age_timer": null,
+                "_buffer": null
+              }
+            }
+          ],
+          "awaitDrainWriters": null
+        },
+        "_eventsCount": 2
+      },
+      "_lastWrite": 1720080252895,
+      "apiSupport": {
+        "21": {
+          "min": 0,
+          "max": 2,
+          "usable": false
+        },
+        "22": {
+          "min": 0,
+          "max": 4,
+          "usable": false
+        },
+        "23": {
+          "min": 0,
+          "max": 4,
+          "usable": false
+        },
+        "24": {
+          "min": 0,
+          "max": 4,
+          "usable": false
+        },
+        "25": {
+          "min": 0,
+          "max": 3,
+          "usable": false
+        },
+        "26": {
+          "min": 0,
+          "max": 3,
+          "usable": false
+        },
+        "27": {
+          "min": 0,
+          "max": 1,
+          "usable": false
+        },
+        "28": {
+          "min": 0,
+          "max": 3,
+          "usable": false
+        },
+        "29": {
+          "min": 0,
+          "max": 3,
+          "usable": false
+        },
+        "30": {
+          "min": 0,
+          "max": 3,
+          "usable": false
+        },
+        "31": {
+          "min": 0,
+          "max": 3,
+          "usable": false
+        },
+        "33": {
+          "min": 0,
+          "max": 2,
+          "usable": false
+        },
+        "34": {
+          "min": 0,
+          "max": 2,
+          "usable": false
+        },
+        "35": {
+          "min": 0,
+          "max": 4,
+          "usable": false
+        },
+        "37": {
+          "min": 0,
+          "max": 3,
+          "usable": false
+        },
+        "38": {
+          "min": 0,
+          "max": 3,
+          "usable": false
+        },
+        "39": {
+          "min": 0,
+          "max": 2,
+          "usable": false
+        },
+        "40": {
+          "min": 0,
+          "max": 2,
+          "usable": false
+        },
+        "41": {
+          "min": 0,
+          "max": 3,
+          "usable": false
+        },
+        "42": {
+          "min": 0,
+          "max": 2,
+          "usable": false
+        },
+        "43": {
+          "min": 0,
+          "max": 2,
+          "usable": false
+        },
+        "44": {
+          "min": 0,
+          "max": 1,
+          "usable": false
+        },
+        "45": {
+          "min": 0,
+          "max": 0,
+          "usable": false
+        },
+        "46": {
+          "min": 0,
+          "max": 0,
+          "usable": false
+        },
+        "47": {
+          "min": 0,
+          "max": 0,
+          "usable": false
+        },
+        "48": {
+          "min": 0,
+          "max": 1,
+          "usable": false
+        },
+        "49": {
+          "min": 0,
+          "max": 1,
+          "usable": false
+        },
+        "50": {
+          "min": 0,
+          "max": 0,
+          "usable": false
+        },
+        "51": {
+          "min": 0,
+          "max": 0,
+          "usable": false
+        },
+        "55": {
+          "min": 0,
+          "max": 1,
+          "usable": false
+        },
+        "57": {
+          "min": 0,
+          "max": 1,
+          "usable": false
+        },
+        "60": {
+          "min": 0,
+          "max": 1,
+          "usable": false
+        },
+        "61": {
+          "min": 0,
+          "max": 0,
+          "usable": false
+        },
+        "64": {
+          "min": 0,
+          "max": 0,
+          "usable": false
+        },
+        "65": {
+          "min": 0,
+          "max": 0,
+          "usable": false
+        },
+        "66": {
+          "min": 0,
+          "max": 0,
+          "usable": false
+        },
+        "68": {
+          "min": 0,
+          "max": 0,
+          "usable": false
+        },
+        "74": {
+          "min": 0,
+          "max": 0,
+          "usable": false
+        },
+        "produce": {
+          "min": 0,
+          "max": 10,
+          "usable": 2
+        },
+        "fetch": {
+          "min": 0,
+          "max": 16,
+          "usable": 2
+        },
+        "offset": {
+          "min": 0,
+          "max": 8,
+          "usable": 0
+        },
+        "metadata": {
+          "min": 0,
+          "max": 12,
+          "usable": 1
+        },
+        "offsetCommit": {
+          "min": 0,
+          "max": 9,
+          "usable": 2
+        },
+        "offsetFetch": {
+          "min": 0,
+          "max": 9,
+          "usable": 1
+        },
+        "groupCoordinator": {
+          "min": 0,
+          "max": 4,
+          "usable": 0
+        },
+        "joinGroup": {
+          "min": 0,
+          "max": 9,
+          "usable": 0
+        },
+        "heartbeat": {
+          "min": 0,
+          "max": 4,
+          "usable": 0
+        },
+        "leaveGroup": {
+          "min": 0,
+          "max": 5,
+          "usable": 0
+        },
+        "syncGroup": {
+          "min": 0,
+          "max": 5,
+          "usable": 0
+        },
+        "describeGroups": {
+          "min": 0,
+          "max": 5,
+          "usable": 0
+        },
+        "listGroups": {
+          "min": 0,
+          "max": 4,
+          "usable": 0
+        },
+        "saslHandshake": {
+          "min": 0,
+          "max": 1,
+          "usable": 1
+        },
+        "apiVersions": {
+          "min": 0,
+          "max": 3,
+          "usable": 0
+        },
+        "createTopics": {
+          "min": 0,
+          "max": 7,
+          "usable": 1
+        },
+        "deleteTopics": {
+          "min": 0,
+          "max": 6,
+          "usable": false
+        },
+        "describeConfigs": {
+          "min": 0,
+          "max": 4,
+          "usable": 2
+        },
+        "saslAuthenticate": {
+          "min": 0,
+          "max": 2,
+          "usable": 0
+        }
+      }
+    }
+  }
+}
