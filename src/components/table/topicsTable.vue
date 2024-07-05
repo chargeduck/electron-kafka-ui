@@ -1,32 +1,69 @@
 <template>
   <div>
-    <el-form :model="searchForm">
+    <el-form :model="searchForm" :inline="true">
       <el-form-item :label="$t('topics.searchForm.topic')">
         <el-input v-model="searchForm.topic"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button @click="createTopics">{{ $t('topics.searchForm.add') }}</el-button>
-        <el-button @click="searchTopics">{{ $t('topics.searchForm.search') }}</el-button>
+        <el-button @click="showDialog = true" type="primary">{{ $t('topics.searchForm.add') }}</el-button>
+        <el-button @click="searchTopics" type="primary">{{ $t('topics.searchForm.search') }}</el-button>
       </el-form-item>
     </el-form>
     <el-table :data="topics">
-      <el-table-column :label="$t('topics.table.topic')" prop="topic"/>
+      <el-table-column :label="$t('topics.table.topic')" prop="topic">
+        <template v-slot="scope">
+          <el-link type="primary" @click="topicMessages(scope.row.topic)">{{ scope.row.topic }}</el-link>
+        </template>
+      </el-table-column>
       <el-table-column :label="$t('topics.table.partition')" prop="partition"/>
       <el-table-column :label="$t('topics.table.leader')" prop="leader"/>
       <el-table-column :label="$t('topics.table.replicas')" prop="replicas"/>
       <el-table-column :label="$t('topics.table.isr')" prop="isr"/>
       <el-table-column :label="$t('topics.table.opera.title')">
         <template v-slot="scope">
-          <el-button @click="delTopic(scope.row.topic)">{{ $t('topics.table.opera.del') }}</el-button>
+          <el-button @click="delTopicByKafkaJs(scope.row.topic)" type="danger">{{
+              $t('topics.table.opera.del')
+            }}
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
+    <el-dialog v-model="showDialog" :title="$t('topics.dialog.title')">
+      <el-form :model="form" :label-width="80">
+        <el-row>
+          <el-col :span="12">
+            <el-form-item :label="$t('topics.dialog.topic')">
+              <el-input v-model="form.topic"/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item :label="$t('topics.dialog.partitions')">
+              <el-input v-model="form.partitions"/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item :label="$t('topics.dialog.replicationFactor')">
+              <el-input v-model="form.replicationFactor"/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="4"></el-col>
+          <el-col :span="4">
+            <el-button @click="showDialog = false">{{ $t('topics.dialog.cancel') }}</el-button>
+          </el-col>
+          <el-col :span="4">
+            <el-button @click="createTopicsByKafkaJs">{{ $t('topics.dialog.confirm') }}</el-button>
+          </el-col>
+        </el-row>
+      </el-form>
+    </el-dialog>
   </div>
 </template>
 <script>
-import {getAdmin, getConsumer} from "@/api/kafka.js";
+import {getAdmin, getConsumer} from "@/utils/kafka.js";
 import {isNotBlank, isEmpty} from "@/utils/str.js";
-import {getKafkaJsAdmin} from "@/api/kafkaJsUtil.js";
+import {getKafkaJs, getKafkaJsAdmin} from "@/utils/kafkaJsUtil.js";
 
 export default {
   name: 'TopicsTable',
@@ -39,17 +76,20 @@ export default {
       searchForm: {
         topic: ''
       },
-      addTopic: {
-        topic: '123',
+      showDialog: false,
+      form: {
+        topic: '',
         partitions: 1,
         replicationFactor: 1
-      }
+      },
+      admin: null
     }
   },
   created() {
     this.loadTopics()
   },
   methods: {
+    //============KafkaNode==================
     searchTopics() {
       if (this.topics === [] || isEmpty(this.searchForm)) {
         this.loadTopics()
@@ -69,6 +109,7 @@ export default {
       const admin = getAdmin(this.chooseCluster)
       this.topics = []
       admin.listTopics((err, res) => {
+        console.log(res, 'resLoadTopics')
         const entries = Object.entries(res[1].metadata)
         entries.map(item => {
           this.topics.push(item[1][0])
@@ -76,20 +117,67 @@ export default {
       });
     },
     createTopics() {
-      const topics = [{...this.addTopic}];
+      const topics = [{...this.form}]
       const admin = getAdmin(this.chooseCluster)
       admin.createTopics(topics, (err, res) => {
-        console.log(res, 'res')
+        console.log('err', err)
+        console.log('res', res)
         this.loadTopics()
       })
+      this.showDialog = false
     },
-    delTopic(topic) {
-      const admin = getKafkaJsAdmin(this.chooseCluster);
-      admin.deleteTopics({
+    // ==============KafkaJS ================
+    async initAdmin() {
+      const client = getKafkaJs(this.chooseCluster);
+      const admin = client.admin();
+      await admin.connect();
+      this.admin = admin
+    },
+    async createTopicsByKafkaJs() {
+      await this.initAdmin()
+      const admin = this.admin
+      const topics = [
+        {
+          topic: this.form.topic,
+          numPartitions: this.form.partitions,
+          replicationFactor: this.form.replicationFactor
+        }
+      ]
+      try {
+        await admin.createTopics({topics});
+        console.log(`topics.createSuccess`);
+        this.showDialog = false
+        this.loadTopics()
+        await this.loadTopicsByKafkaJs()
+      } catch (error) {
+        console.log(`topics.createFailed\nretry with kafka-node`, error);
+        this.createTopics()
+      } finally {
+        await admin.disconnect();
+      }
+    },
+    async delTopicByKafkaJs(topic) {
+      await this.initAdmin()
+      const admin = this.admin
+      await admin.deleteTopics({
         topics: [topic],
         timeout: 5000
-      }).then(resp => {
-        console.log(resp)
+      }).then(async resp => {
+        console.log(resp, 'resp')
+        this.searchTopics()
+      })
+    },
+    async loadTopicsByKafkaJs() {
+      await this.initAdmin()
+      const listTopics = await this.admin.listTopics()
+      console.log(listTopics)
+    },
+    topicMessages(topic) {
+      const consumer = getConsumer(this.chooseCluster, [{topic}], {});
+      const map = new Map();
+      consumer.on('message', (message) => {
+        console.log(message, 'msg')
+        console.log(message.headers, 'msg')
       })
     }
   }

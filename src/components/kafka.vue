@@ -11,17 +11,17 @@
       <el-main>
         <el-card>
           <cluster-table
-              v-show="tableActive === 0"
+              v-if="tableActive === 0"
               :clusterArr="clusterArr"
               :localStorageKey="localStorageKey"
               @update-table-active="updateTableActive"
               @update-cluster-arr="updateClusterArr"/>
           <metadata-table
-              v-show="tableActive === 1"
+              v-if="tableActive === 1"
               :choose-cluster="chooseCluster"
           />
           <topics-table
-              v-show="tableActive === 3"
+              v-if="tableActive === 3"
               :choose-cluster="chooseCluster"
           ></topics-table>
         </el-card>
@@ -63,9 +63,8 @@ export default {
       this.clusterArr = JSON.parse(localStorage.getItem(this.localStorageKey)) || []
     },
     updateTableActive(val, chooseCluster) {
-      console.log(val, 'updateTableActive')
       this.tableActive = val
-      this.chooseCluster = chooseCluster
+      this.chooseCluster = JSON.parse(chooseCluster)
     }
   }
 }

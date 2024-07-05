@@ -9,8 +9,6 @@ import i18n from "@/utils/i18n.js";
 // if (typeof window.Buffer === "undefined") { // 判断当前环境是否有Buffer对象
 //     window.Buffer = Buffer.buffer; // Buffer对象不存在则创建导入的buffer
 // }
-console.log(process, 'process')
-console.log(process.version, 'processVersion')
 
 import App from './App.vue'
 

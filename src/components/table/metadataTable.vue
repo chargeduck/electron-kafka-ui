@@ -67,11 +67,11 @@ export default {
     }
   },
   created() {
-    console.log(this.chooseCluster, 'chooseCluster')
     this.loadMetadata()
   },
   methods: {
     loadMetadata() {
+      console.log('123')
       const kafkaClient = new kafka.KafkaClient({
         kafkaHost: this.chooseCluster.bootstrapServers
       });
@@ -86,6 +86,10 @@ export default {
           options: JSON.stringify(kafkaClient.options, null, 2)
         }
         this.metadataJson = JSON.stringify(kafkaClient, null, 2)
+      })
+      console.log(kafkaClient, 'kafkaClient')
+      kafkaClient.on('error', (err) => {
+        console.log(e)
       })
 
     }

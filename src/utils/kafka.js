@@ -1,4 +1,5 @@
 const kafka = require('kafka-node')
+
 export function connKafka(chooseCluster) {
     const kafkaClient = new kafka.KafkaClient({
         kafkaHost: chooseCluster.bootstrapServers
@@ -43,4 +44,11 @@ export function getAdmin(chooseCluster) {
  */
 export function getConsumer(chooseCluster, payloads, options) {
     return new kafka.Consumer(connKafka(chooseCluster), payloads, options);
+}
+
+export function getConsumerGroup(chooseCluster, topic) {
+    const consumerGroup = new kafka.ConsumerGroup({
+        kafkaHost: chooseCluster.bootstrapServers
+    }, [topic]);
+    return consumerGroup;
 }

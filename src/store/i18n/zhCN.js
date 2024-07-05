@@ -46,6 +46,16 @@ export default {
                 title: '操作',
                 del: '删除'
             }
-        }
+        },
+        dialog: {
+            title: '新增主题',
+            topic: '主题',
+            partitions: '分组',
+            replicationFactor: '副本',
+            cancel: '取消',
+            confirm: '确认'
+        },
+        createSuccess: '主题创建成功',
+        createFailed: '主题创建失败'
     }
 }

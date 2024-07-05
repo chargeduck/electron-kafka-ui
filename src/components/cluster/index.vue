@@ -53,8 +53,7 @@ export default {
   },
   methods: {
     changeTable(val , item) {
-      console.log(val, 'activeTable')
-      this.$emit('update-table-active', val, item)
+      this.$emit('update-table-active', val, JSON.stringify(item))
     }
   }
 }

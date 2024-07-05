@@ -46,6 +46,14 @@ export default {
                 title: 'opera',
                 del: 'del'
             }
+        },
+        dialog: {
+            title: 'Add Topics',
+            topic: 'Topic',
+            partitions: 'Partitions',
+            replicationFactor: 'replicationFactor',
+            cancel: 'Cancel',
+            confirm: 'Confirm'
         }
     }
 }
