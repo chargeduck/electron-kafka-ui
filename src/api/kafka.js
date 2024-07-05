@@ -1,22 +1,47 @@
 const kafka = require('kafka-node')
-let client = null
 
 export function connKafka(chooseCluster) {
     const kafkaClient = new kafka.KafkaClient({
         kafkaHost: chooseCluster.bootstrapServers
     })
-    kafkaClient.on('ready', () => {
-        client = kafkaClient
-    })
+    return kafkaClient;
 }
 
 export function getAdmin(chooseCluster) {
-    if (client == null || client.ready === false) {
-        connKafka(chooseCluster)
-    }
-    const kafkaClient = new kafka.KafkaClient({
-        kafkaHost: chooseCluster.bootstrapServers
-    })
-    const admin =  new kafka.Admin(kafkaClient)
-    return admin;
+    const client = connKafka(chooseCluster)
+    return new kafka.Admin(client)
+}
+
+/**
+ * @param chooseCluster     选择的节点数据
+ * @param payloads          荷载
+ * <p>
+ *     {
+ *      topic: 'topicName',
+ *      offset: 0, //default 0
+ *      partition: 0 // default 0
+ *     }
+ * </p>
+ * @param options           配置信息
+ * {
+ *     groupId: 'kafka-node-group',//consumer group id, default `kafka-node-group`
+ *     // Auto commit config
+ *     autoCommit: true,
+ *     autoCommitIntervalMs: 5000,
+ *     // The max wait time is the maximum amount of time in milliseconds to block waiting if insufficient data is available at the time the request is issued, default 100ms
+ *     fetchMaxWaitMs: 100,
+ *     // This is the minimum number of bytes of messages that must be available to give a response, default 1 byte
+ *     fetchMinBytes: 1,
+ *     // The maximum bytes to include in the message set for this partition. This helps bound the size of the response.
+ *     fetchMaxBytes: 1024 * 1024,
+ *     // If set true, consumer will fetch message from the given offset in the payloads
+ *     fromOffset: false,
+ *     // If set to 'buffer', values will be returned as raw buffer objects.
+ *     encoding: 'utf8',
+ *     keyEncoding: 'utf8'
+ * }
+ * @returns {Consumer}      消费者
+ */
+export function getConsumer(chooseCluster, payloads, options) {
+    return new kafka.Consumer(connKafka(chooseCluster), payloads, options);
 }

@@ -31,7 +31,21 @@ export default {
     topics: {
         searchForm: {
             topic: '主题',
-            add: '新增'
+            add: '新增',
+            search: '查询',
+            clear: '重置'
+        },
+        table: {
+            index: '序号',
+            topic: '主题',
+            partition: '分区',
+            leader: 'leader',
+            replicas: '副本',
+            isr: 'isr',
+            opera: {
+                title: '操作',
+                del: '删除'
+            }
         }
     }
 }

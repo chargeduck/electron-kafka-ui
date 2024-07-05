@@ -31,7 +31,21 @@ export default {
     topics: {
         searchForm: {
             topic: 'topic',
-            add: 'Add Topic'
+            add: 'Add Topic',
+            search: 'Search',
+            clear: 'Clear'
+        },
+        table: {
+            index: 'index',
+            topic: 'topic',
+            partition: 'partition',
+            leader: 'leader',
+            replicas: 'replicas',
+            isr: 'isr',
+            opera: {
+                title: 'opera',
+                del: 'del'
+            }
         }
     }
 }
