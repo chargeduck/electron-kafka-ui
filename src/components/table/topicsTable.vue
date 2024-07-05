@@ -26,6 +26,7 @@
 <script>
 import {getAdmin, getConsumer} from "@/api/kafka.js";
 import {isNotBlank, isEmpty} from "@/utils/str.js";
+import {getKafkaJsAdmin} from "@/api/kafkaJsUtil.js";
 
 export default {
   name: 'TopicsTable',
@@ -83,18 +84,12 @@ export default {
       })
     },
     delTopic(topic) {
-      console.log(topic, 'topic')
-      const consumer = getConsumer(this.chooseCluster, [{topic}], {
-        autoCommit: true,
-        autoCommitIntervalMs: 5000
-      })
-      console.log(consumer, 'consumer')
-      consumer.removeTopics([topic], function (err, removed) {
-        console.log(err, 'err')
-        console.log(removed, 'removed')
-      });
-      consumer.on('message', (message) => {
-        console.log(message, 'message')
+      const admin = getKafkaJsAdmin(this.chooseCluster);
+      admin.deleteTopics({
+        topics: [topic],
+        timeout: 5000
+      }).then(resp => {
+        console.log(resp)
       })
     }
   }

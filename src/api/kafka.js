@@ -1,5 +1,4 @@
 const kafka = require('kafka-node')
-
 export function connKafka(chooseCluster) {
     const kafkaClient = new kafka.KafkaClient({
         kafkaHost: chooseCluster.bootstrapServers
