@@ -54,6 +54,16 @@ export default {
             replicationFactor: 'replicationFactor',
             cancel: 'Cancel',
             confirm: 'Confirm'
+        },
+        topicMsg: {
+            title: 'Show Topic Message',
+            searchForm: {
+                search: 'Search'
+            },
+            expand: {
+                key: 'key',
+                value: 'value'
+            }
         }
     }
 }

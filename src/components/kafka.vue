@@ -23,7 +23,11 @@
           <topics-table
               v-if="tableActive === 3"
               :choose-cluster="chooseCluster"
-          ></topics-table>
+          />
+          <topic-dialog
+            v-if="tableActive === 4"
+
+          />
         </el-card>
       </el-main>
     </el-container>
@@ -34,11 +38,13 @@ import Cluster from "@components/cluster/index.vue"
 import ClusterTable from "@components/table/clusterTable.vue"
 import MetadataTable from "@components/table/metadataTable.vue"
 import TopicsTable from "@components/table/topicsTable.vue";
+import TopicDialog from "@components/dialog/topicDialog.vue";
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: 'kafka',
   components: {
+    TopicDialog,
     TopicsTable,
     Cluster,
     ClusterTable,

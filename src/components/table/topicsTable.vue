@@ -58,17 +58,24 @@
         </el-row>
       </el-form>
     </el-dialog>
+    <el-dialog v-model="showTopicMsg" :title="$t('topicMsg.title')">
+      <topic-dialog :table-data="topicMsgList"/>
+    </el-dialog>
   </div>
 </template>
 <script>
 import {getAdmin, getConsumer} from "@/utils/kafka.js";
 import {isNotBlank, isEmpty} from "@/utils/str.js";
 import {getKafkaJs, getKafkaJsAdmin} from "@/utils/kafkaJsUtil.js";
+import TopicDialog from '@components/dialog/topicDialog.vue'
 
 export default {
   name: 'TopicsTable',
   props: {
     chooseCluster: Object
+  },
+  components: {
+    TopicDialog
   },
   data() {
     return {
@@ -82,7 +89,9 @@ export default {
         partitions: 1,
         replicationFactor: 1
       },
-      admin: null
+      admin: null,
+      topicMsgList: [],
+      showTopicMsg: false
     }
   },
   created() {
@@ -173,11 +182,11 @@ export default {
       console.log(listTopics)
     },
     topicMessages(topic) {
+      this.showTopicMsg = true
       const consumer = getConsumer(this.chooseCluster, [{topic}], {});
-      const map = new Map();
+      this.topicMsgList = []
       consumer.on('message', (message) => {
-        console.log(message, 'msg')
-        console.log(message.headers, 'msg')
+        this.topicMsgList.push(message)
       })
     }
   }

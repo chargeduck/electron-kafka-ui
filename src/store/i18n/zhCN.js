@@ -57,5 +57,15 @@ export default {
         },
         createSuccess: '主题创建成功',
         createFailed: '主题创建失败'
+    },
+    topicMsg: {
+        title: '主题消息',
+        searchForm: {
+            search: '搜索'
+        },
+        expand: {
+            key: 'key',
+            value: 'value'
+        }
     }
 }
