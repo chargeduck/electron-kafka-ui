@@ -38,15 +38,22 @@
   </div>
 </template>
 <script>
+import {useClusterStore} from "@/store/cluster.js"
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: 'clusterMenu',
-  props: {
-    clusterArr: Array,
-  },
+  // props: {
+  //   clusterArr: Array,
+  // },
   data() {
     return {
+      store: useClusterStore(),
+    }
+  },
+  computed: {
+    clusterArr() {
+      return useClusterStore().getClusterArr
     }
   },
   created() {

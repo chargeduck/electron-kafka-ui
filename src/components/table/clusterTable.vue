@@ -11,8 +11,8 @@
 
     <el-table :data="clusterArr">
       <el-table-column type="index" width="80" :label="$t('cluster.table.index')"/>
-      <el-table-column prop="cluster" :label="$t('cluster.table.cluster')"/>
-      <el-table-column prop="bootstrapServers" :label="$t('cluster.table.bootstrapServers')"/>
+      <el-table-column prop="cluster" width="100" :label="$t('cluster.table.cluster')"/>
+      <el-table-column prop="bootstrapServers" width="180" :label="$t('cluster.table.bootstrapServers')"/>
       <el-table-column prop="version" :label="$t('cluster.table.version')"/>
       <el-table-column prop="brokerCount" :label="$t('cluster.table.brokerCount')"/>
       <el-table-column prop="partitions" :label="$t('cluster.table.partitions')"/>
@@ -75,6 +75,7 @@
 <script>
 import {v4 as uuidV4} from "uuid";
 import {CirclePlus, Delete} from "@element-plus/icons-vue";
+import {useClusterStore} from "@/store/cluster.js";
 
 export default {
   name: 'ClusterTable',
@@ -84,11 +85,10 @@ export default {
     },
     CirclePlus() {
       return CirclePlus
+    },
+    clusterArr() {
+      return useClusterStore().getClusterArr
     }
-  },
-  props: {
-    clusterArr: Array,
-    localStorageKey: String
   },
   data() {
     return {
@@ -99,30 +99,32 @@ export default {
         zkHost: '',
         zkPort: 2181,
         uuid: ''
-      }
+      },
+      store: null,
     }
   },
-  watch: {
-    clusterArr: {
-      handler(newVal, oldVal) {
-        localStorage.setItem(this.localStorageKey, JSON.stringify(newVal))
-      },
-      deep: true
-    }
+  created() {
+    this.store = useClusterStore()
   },
   methods: {
     saveClusterConn() {
       this.form.uuid = uuidV4()
-      this.$emit('update-cluster-arr', [...this.clusterArr, this.form])
+      this.store.addCluster(this.form)
+      this.form = {
+        cluster: '',
+        bootstrapServers: '',
+        zkHost: '',
+        zkPort: 2181,
+        uuid: ''
+      }
       this.showDialog = false
     },
     clearLocalStorage() {
-      localStorage.removeItem(this.localStorageKey)
-      this.$emit('update-cluster-arr', [])
+      this.store.clearCluster()
       this.$message.success('清除成功')
     },
     removeCluster(uuid) {
-      this.$emit('update-cluster-arr', this.clusterArr.filter(item => item.uuid !== uuid))
+      this.store.removeCluster(uuid)
     }
   }
 }

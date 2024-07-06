@@ -2,20 +2,23 @@
   <div class="container">
     <el-container>
       <el-aside>
+        <!--              @update-cluster-arr="updateClusterArr"-->
         <cluster
             :cluster-arr="clusterArr"
             :table-active="tableActive"
             @update-table-active="updateTableActive"
-            @update-cluster-arr="updateClusterArr"/>
+
+        />
       </el-aside>
       <el-main>
         <el-card>
+          <!--              @update-cluster-arr="updateClusterArr"-->
           <cluster-table
               v-if="tableActive === 0"
               :clusterArr="clusterArr"
               :localStorageKey="localStorageKey"
               @update-table-active="updateTableActive"
-              @update-cluster-arr="updateClusterArr"/>
+          />
           <metadata-table
               v-if="tableActive === 1"
               :choose-cluster="chooseCluster"
@@ -34,6 +37,7 @@
   </div>
 </template>
 <script>
+import {useClusterStore} from "@/store/cluster.js";
 import Cluster from "@components/cluster/index.vue"
 import ClusterTable from "@components/table/clusterTable.vue"
 import MetadataTable from "@components/table/metadataTable.vue"
@@ -52,22 +56,22 @@ export default {
   },
   data() {
     return {
-      clusterArr: [],
+      clusterArr: useClusterStore().getClusterArr,
       localStorageKey: 'clusterArr',
       tableActive: 0,
       chooseCluster: {}
     }
   },
   created() {
-    this.loadLocalStorageData()
+    // this.loadLocalStorageData()
   },
   methods: {
-    updateClusterArr(newVal) {
-      this.clusterArr = newVal
-    },
-    loadLocalStorageData() {
-      this.clusterArr = JSON.parse(localStorage.getItem(this.localStorageKey)) || []
-    },
+    // updateClusterArr(newVal) {
+    //   this.clusterArr = newVal
+    // },
+    // loadLocalStorageData() {
+    //   this.clusterArr = JSON.parse(localStorage.getItem(this.localStorageKey)) || []
+    // },
     updateTableActive(val, chooseCluster) {
       this.tableActive = val
       this.chooseCluster = JSON.parse(chooseCluster)
